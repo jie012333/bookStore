@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		  http://www.springframework.org/schema/beans/spring-beans.xsd
+		  http://www.springframework.org/schema/context
+		  http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		  http://www.springframework.org/schema/mvc
+		  http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd" >
+
+    <!--配置Handler,springMVC会将包下用了@Controller注解的类注册为spring的Controller-->
+    <context:component-scan base-package="cn.jie.bookstore.user.controller,cn.jie.bookstore.category.controller,
+        cn.jie.bookstore.book.controller" />
+    <context:annotation-config/>
+    <!--  设置默认配置方案-->
+    <mvc:annotation-driven />
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--前缀-->
+        <property name="prefix" value="/jsp/front/" />
+        <!--后缀-->
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 请求编码格式 -->
+        <property name="defaultEncoding" value="utf-8"/>
+        <!-- 上传文件大小(单位:字节) -->
+        <property name="maxUploadSize" value="50000000" />
+        <!-- 缓冲区大小(单位:KB) -->
+        <property name="maxInMemorySize" value="1024" />
+    </bean>
+
+    <mvc:resources mapping="/data-folder/**" location="/data-folder/"/>
+    <mvc:resources mapping="/jsp/**" location="/jsp/"/>
+
+
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jie.bookstore.user.mapper.UserMapper">
+
+    <select id="findInfo" parameterType="cn.jie.bookstore.user.pojo.User" resultType="cn.jie.bookstore.user.pojo.User">
+        SELECT * from user
+        <where>
+            <if test="userName!=null and userName!=''">
+                and user_name = #{userName}
+            </if>
+            <if test="userPassword!=null and userPassword!=''">
+                and user_password = #{userPassword}
+            </if>
+            <if test="email!=null and email!=''">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        <selectKey keyProperty="userId" resultType="java.lang.String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+        INSERT INTO
+            user(user_id,user_name,user_password,email,status)
+        VALUES
+            (#{userId},#{userName},#{userPassword},#{email},#{status})
+    </insert>
+
+    <update id="updateInfo" parameterType="User">
+        UPDATE user SET
+            <if test="userStatus!=null and userStatus!=''">user_name = #{userName}</if>
+            <if test="userPassword!=null and userPassword!=''">user_password = #{userPassword}</if>
+        WHERE
+            user_name = #{userName}
+    </update>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jie.bookstore.book.mapper.BookMapper">
+
+    <select id="findBestSellerBook" resultType="Book">
+        SELECT
+          b2.book_id,b2.book_name,b2.author,b2.price,b2.currPrice,b2.discount,b2.press,b2.printtime,b2.image_small
+        FROM
+          best_seller b1,book b2
+        WHERE
+          b1.bs_id=b2.book_id
+        ORDER BY
+          b1.bs_priority
+    </select>
+
+    <select id="findAllBook" resultType="Book">
+        SELECT
+          book_id,book_name,author,price,currPrice,discount,press,printtime,image_small
+        FROM
+          book
+    </select>
+</mapper>
